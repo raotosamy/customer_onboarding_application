@@ -1,0 +1,17 @@
+<div class="file-upload-container">
+  <div *ngIf="previews.length!=0">
+  	<div class="file-preview" *ngFor="let file of previews">
+	    <img *ngIf="file.type.startsWith('image/')" [src]="file.previewUrl" alt="Preview" />
+	    <div *ngIf="file.type === 'application/pdf'" class="icon-preview">
+	      <mat-icon class="pdf-icon">picture_as_pdf</mat-icon>
+	      <p>{{ file.name }}</p>
+	    </div>
+	    <div *ngIf="file.type === 'application/msword' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'" class="icon-preview">
+	      <mat-icon class="word-icon">description</mat-icon>
+	      <p>{{ file.name }}</p>
+	    </div>
+	    <p *ngIf="!file.type.startsWith('image/') && !file.type.startsWith('application/')">{{ file.name }}</p>
+	  </div>
+  </div>
+  <input type="file" (change)="onFileSelected($event)" multiple />
+</div>

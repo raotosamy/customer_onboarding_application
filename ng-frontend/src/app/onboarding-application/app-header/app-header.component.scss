@@ -1,0 +1,24 @@
+.main-header{
+	background-color: #C72B2B;
+}
+.header-left{
+	max-height: 40px;
+	display: flex;
+	padding-left: 10px;
+	color: #FFFFFF;
+}
+.header-left .app-name{
+	padding-top: 5px;
+}
+.spacer{
+	 flex: 1 1 auto;
+}
+.header-right{
+	max-height: 40px;
+	display: flex;
+	padding-left: 10px;
+	color: #FFFFFF;
+}
+.header-right mat-icon{
+	margin-right: 10px;
+}

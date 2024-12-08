@@ -1,0 +1,39 @@
+.file-upload-container {
+  margin: 20px;
+}
+
+input[type='file'] {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.file-preview img {
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+}
+
+.icon-preview {
+  display: flex;
+  align-items: center;
+}
+
+.mat-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.pdf-icon {
+  color: #ad000c;
+}
+
+.word-icon {
+  color: #ad000c;
+}
