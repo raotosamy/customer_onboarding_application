@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                         manager
                                 .requestMatchers(HttpMethod.GET, "/login", "/error", "/api/login", "/api/error")
                                 .permitAll()
-                                .requestMatchers(HttpMethod.POST, "/authenticate", "/api/authenticate")
+                                .requestMatchers(HttpMethod.POST, "/authenticate", "/api/authenticate", "/api/applications")
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated())
