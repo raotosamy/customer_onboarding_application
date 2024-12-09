@@ -1,11 +1,11 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import {FormBuilder, Validators, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatStepperModule} from '@angular/material/stepper';
+import {MatStepper, MatStepperModule} from '@angular/material/stepper';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -37,6 +37,7 @@ import { NgIf } from '@angular/common';
 })
 
 export class ApplicationFormComponent {
+  @ViewChild(MatStepper) stepper: MatStepper | undefined;
   private _formBuilder = inject(FormBuilder);
   public _countries = Object.entries(getNameList()).map(([name,code]) => ({code,name}));
   public _application_id = undefined;
@@ -65,7 +66,7 @@ export class ApplicationFormComponent {
 
   submitHandler(){
     if(this.firstFormGroup.valid && this.secondFormGroup.valid && this.thirdFormGroup.valid){
-      const formData = Object.assign({}, this.firstFormGroup.value, Object.assign({}, this.secondFormGroup.value, this.thirdFormGroup.value));
+      const formData = Object.assign({}, this.firstFormGroup.value, Object.assign({}, this.secondFormGroup.value, Object.assign({},this.thirdFormGroup.value,{id:null}) ));
       //console.log(Date.parse(formData.dateInc as string));
       //const date = new Date(formData.dateInc);
       const date = new Date(Date.parse(formData.dateInc as string));
@@ -74,6 +75,9 @@ export class ApplicationFormComponent {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         formData.dateInc = `${year}-${month}-${day}`;
+      }
+      if(this._application_id != undefined){
+        formData["id"] = this._application_id;
       }
       this.http.post<any>('http://localhost:8081/applications', formData).subscribe({
         next: (response) => {
@@ -93,4 +97,12 @@ export class ApplicationFormComponent {
       });
     }
   }
+
+  resetStepper(){
+    if (this.stepper) {
+      this._application_id = undefined;
+      this.stepper.reset();
+    }
+  }
+
 }
