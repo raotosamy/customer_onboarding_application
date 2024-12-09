@@ -3,7 +3,7 @@ import { Routes, RouterModule, CanActivate, Router } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { ApplicationFormComponent } from './onboarding-application/application-form/application-form.component';
-//import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './onboarding-application/dashboard/dashboard.component';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
   canActivate(): boolean {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('authToken');
     if (token) {
       return true;
     }
@@ -24,7 +24,7 @@ export class AuthGuard implements CanActivate {
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'application-form', component: ApplicationFormComponent },
-//  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login' },
   
 ];
