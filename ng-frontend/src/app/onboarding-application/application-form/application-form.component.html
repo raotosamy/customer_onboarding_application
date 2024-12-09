@@ -1,18 +1,18 @@
 <mat-stepper [linear]="isLinear" #stepper class="primary-content">
   <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup" class="app-form">
+    <form [formGroup]="firstFormGroup" class="app-form" (ngSubmit)="submitHandler()">
       <ng-template matStepLabel>Personal information</ng-template>
       <mat-form-field>
         <mat-label>Name</mat-label>
-        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        <input matInput placeholder="Last name, First name" formControlName="name" required>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Email address" formControlName="firstCtrl" required>
+        <input matInput placeholder="Email address" formControlName="email" required>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Apply for</mat-label>
-        <mat-select>
+        <mat-select  formControlName="typeId">
           <mat-option value="1">Investisment portfolio</mat-option>
           <mat-option value="2">Account to operate locally</mat-option>
           <mat-option value="3">Account to operate overseas</mat-option>
@@ -21,11 +21,11 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Company name</mat-label>
-        <input matInput placeholder="Company name" formControlName="firstCtrl" required>
+        <input matInput placeholder="Company name" formControlName="company" required>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Entity type</mat-label>
-        <mat-select>
+        <mat-select formControlName="entityId">
           <mat-option value="1">Trust</mat-option>
           <mat-option value="2">Associa</mat-option>
           <mat-option value="3">Private Company</mat-option>
@@ -39,10 +39,10 @@
 
   <mat-step [stepControl]="secondFormGroup">
     <ng-template matStepLabel>Business information</ng-template>
-    <form [formGroup]="secondFormGroup" class="app-form">
+    <form [formGroup]="secondFormGroup" class="app-form"  (ngSubmit)="submitHandler()">
       <mat-form-field>
         <mat-label>Business activity</mat-label>
-        <mat-select>
+        <mat-select formControlName="businessId">
           <mat-option value="1">Banking</mat-option>
           <mat-option value="2">Fishing,</mat-option>
           <mat-option value="3">Manufacturing</mat-option>
@@ -50,15 +50,15 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Licence</mat-label>
-        <input matInput placeholder="Licence" formControlName="secondCtrl" required>
+        <input matInput placeholder="Licence" formControlName="licence" required>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Registration number</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="xxxx-" required>
+        <input matInput formControlName="regNumber" placeholder="xxxx-" required>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Country of incorporation</mat-label>
-        <mat-select>
+        <mat-select formControlName="country">
           <mat-option *ngFor="let country of _countries" [value]="country.code">
             {{ country.name }}
           </mat-option>
@@ -66,14 +66,14 @@
       </mat-form-field>
       <mat-form-field>
         <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput [matDatepicker]="picker" formControlName="dateInc">
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Passeport number</mat-label>
-        <input matInput placeholder="Passeport number" formControlName="secondCtrl" required>
+        <input matInput placeholder="Passeport number" formControlName="passeport" required>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -83,7 +83,7 @@
 
   </mat-step>
   <mat-step [stepControl]="thirdFormGroup" label="Required documents">
-    <form [formGroup]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup"  (ngSubmit)="submitHandler()">
       <file-upload/>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -93,9 +93,13 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+    <p *ngIf="_application_id != undefined">
+      Success, Application ID: {{ _application_id }}
+    </p>
+    <p *ngIf="_application_id == undefined">
+      ERROR!!!
+    </p>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>

@@ -33,7 +33,8 @@ export class LoginComponent {
 
     this.http.post<any>('http://localhost:8081/api/authenticate', loginData).subscribe({
       next: (response) => {
-        localStorage.setItem('token', response.jwt);
+        localStorage.setItem('authToken', response.jwtKey);
+        localStorage.setItem('login', response.username);
         this.router.navigate(['/dashboard']); // Navigate to a secure page
       },
       error: (error) => {

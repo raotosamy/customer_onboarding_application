@@ -15,5 +15,5 @@ import { MatBadgeModule } from '@angular/material/badge';
   styleUrl: './app-header.component.scss'
 })
 export class AppHeaderComponent {
-  username="raoto";
+  username=localStorage["login"];
 }
