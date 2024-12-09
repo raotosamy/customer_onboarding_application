@@ -26,7 +26,7 @@ import {MatIconModule} from '@angular/material/icon';
 
 export class DashboardComponent implements AfterViewInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-
+  public user_role = "unknow";
   public displayedColumns: string[] = ['company', 'entityId', 'businessId', 'country', 'regNumber', 'actions'];
   
   public dataSource = new MatTableDataSource<any>([]);
@@ -44,6 +44,7 @@ export class DashboardComponent implements AfterViewInit{
   }
 
   constructor(private http: HttpClient, private router: Router) {
+    this.user_role = localStorage.getItem("role") || "unknow";
     this.fetchApplicationsList();
   }
 

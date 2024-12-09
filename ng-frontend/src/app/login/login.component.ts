@@ -35,6 +35,7 @@ export class LoginComponent {
       next: (response) => {
         localStorage.setItem('authToken', response.jwtKey);
         localStorage.setItem('login', response.username);
+        localStorage.setItem('role', response.role);
         this.router.navigate(['/dashboard']); // Navigate to a secure page
       },
       error: (error) => {
