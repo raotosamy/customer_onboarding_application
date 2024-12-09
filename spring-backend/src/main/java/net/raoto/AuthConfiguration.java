@@ -2,6 +2,7 @@ package net.raoto;
 
 import net.raoto.usermanagement.AuthRequest;
 import net.raoto.usermanagement.AuthResponse;
+import net.raoto.usermanagement.CustomUserDetails;
 import net.raoto.usermanagement.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +46,8 @@ public class AuthConfiguration {
         }
         final UserDetails userDetails = userManager.loadUserByUsername(request.getUsername());
         final String jwt = jwtUtil.generateToken(request.getUsername());
-        return ResponseEntity.ok(new AuthResponse(userDetails.getUsername(),jwt));
+        final String role = userDetails instanceof CustomUserDetails ? ((CustomUserDetails)userDetails).getRole():"unknow";
+        return ResponseEntity.ok(new AuthResponse(userDetails.getUsername(), role, jwt));
     }
 
 }
