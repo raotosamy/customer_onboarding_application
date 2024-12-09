@@ -36,7 +36,13 @@ public class SecurityConfiguration {
                 .csrf(configurer -> configurer.disable())
                 .authorizeHttpRequests(manager ->
                         manager
-                                .requestMatchers(HttpMethod.GET, "/login", "/error", "/api/login", "/api/error")
+                                .requestMatchers(HttpMethod.GET,
+                                        "/login",
+                                        "/applications",
+                                        "/api/applications",
+                                        "/error",
+                                        "/api/login",
+                                        "/api/error")
                                 .permitAll()
                                 .requestMatchers(HttpMethod.POST,
                                         "/authenticate",
