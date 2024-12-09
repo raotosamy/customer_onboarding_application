@@ -33,12 +33,16 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element">
-    	<button mat-button [matMenuTriggerFor]="processingmenu">Action</button>
+    	<mat-icon *ngIf="element.processStatus==1">check</mat-icon>
+    	<mat-icon *ngIf="element.processStatus==2">close</mat-icon>
+    	<button *ngIf="!element.processStatus" mat-button [matMenuTriggerFor]="processingmenu">Action</button>
 		<mat-menu #processingmenu="matMenu">
-		  <button mat-menu-item>Open in edit mode</button>
-		  <button mat-menu-item>Proceed</button>
-		  <button mat-menu-item>Reject</button>
-		  <button mat-menu-item>Open documents</button>
+		  <!--<button mat-menu-item>Open in edit mode</button>-->
+		  <button mat-menu-item 
+		  	(click)="updateStatus(element, 'processStatus', 1)">Proceed</button>
+		  <button mat-menu-item 
+		  	(click)="updateStatus(element, 'processStatus', 2)">Reject</button>
+		  <!--<button mat-menu-item>Open documents</button>-->
 		</mat-menu>
     </td>
   </ng-container>

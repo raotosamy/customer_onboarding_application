@@ -1,21 +1,25 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import {MatIconModule} from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
+    CommonModule,
     MatTableModule, 
     MatMenuModule, 
     MatButtonModule, 
     HttpClientModule, 
-    MatPaginatorModule],
+    MatPaginatorModule,
+    MatIconModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
@@ -63,6 +67,24 @@ export class DashboardComponent implements AfterViewInit{
       error: (error) => {
         console.error('Loading failed:', error);
         this.dataSource.data = [];
+      }
+    });
+  }
+
+  updateStatus(item: any, status_field: string, status: number){
+    item[status_field]=status;
+    const regex = /(?<=\/applications\/)[a-f0-9]{32}/;
+    if(item._links.onboardingApplication.href){
+      const match = item._links.onboardingApplication.href.match(regex);
+      if(match){
+        item["id"] = match[0];
+      } 
+    }
+    this.http.post<any>('http://localhost:8081/applications', item).subscribe({
+      next: (response) => {
+      },
+      error: (error) => {
+        console.error('Loading failed:', error);
       }
     });
   }
